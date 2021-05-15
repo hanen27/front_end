@@ -31,9 +31,9 @@ import AddUser from '../AddUseScreen/AddUser';
             />
           );
         } else {
-          return null;
+          console.log('heyy')
         }
-      console.log()
+      
       });
 
     };
@@ -48,7 +48,9 @@ import AddUser from '../AddUseScreen/AddUser';
         <NavBar
        
        />
-        <Demandes/>
+          <Switch>
+          {getRoutes(routes)}
+        </Switch>
         <Container fluid>
           <Footer />
         </Container>

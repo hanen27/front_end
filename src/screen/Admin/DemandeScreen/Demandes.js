@@ -9,7 +9,9 @@ import { Container } from "reactstrap";
 const api = axios.create({
   baseURL: 'http://127.0.0.1:8000/alldemande'
 })
-
+const apiUpdate = axios.create({
+   baseURL: 'http://127.0.0.1:8000/updatedemande'
+  })
 class Demandes extends Component {
 state = {
   Donnes : []
@@ -18,11 +20,24 @@ state = {
     super();
    
   };
-  async componentDidMount (){
-   const res = await api.get('/')
+  async getData (){
+  const  res = await api.get('/')
    this.setState({Donnes : res.data});
+  }
+   componentDidMount (){
+   this.getData();
   
   };
+   acceptDemande = (id) =>{
+    apiUpdate.put(`/${id}`, {"etat":"accepter"}) 
+    this.getData();
+   
+}
+  rejeterDemande = (id) =>{
+    apiUpdate.put(`/${id}`, {"etat":"rejeter"})
+this.getData();
+
+}
  
 
   render (){
@@ -31,8 +46,8 @@ state = {
 <Header/>
 <Container className="mt--7" fluid>
 
-<Tables Donnes={this.state.Donnes} />
-<TableHistorique donnesHistorique={this.state.Donnes}/>
+<Tables Donnes={this.state.Donnes} actionAccpte={this.acceptDemande} actionRejter={this.rejeterDemande} />
+<TableHistorique donnesHistorique={this.state.Donnes} />
 </Container>
     
       </>

@@ -1,17 +1,11 @@
 import { Link } from "react-router-dom";
 import "../screen/loginScreen/loginStyle.css";
-import adminRoutes from '../Routes/AdminRoutes';
+import EmployeeRoute from '../Routes/EmployeeRoute';
 import React, { useState } from "react";
 import { PropTypes } from "prop-types";
 
 import { NavLink as NavLinkRRD } from "react-router-dom";
 import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-  CardTitle,
-  Collapse,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
@@ -35,7 +29,7 @@ import {
   Col,
 } from "reactstrap";
 
-const NavBar = (props) => {
+const NavBarEmployee = (props) => {
   const { bgColor, routes, logo } = props;
   let navbarBrandProps;
   if (logo && logo.innerLink) {
@@ -63,8 +57,8 @@ const NavBar = (props) => {
   const closeCollapse = () => {
     setCollapseOpen(false);
   };
-  const createLinks = (routes) => {
-    return adminRoutes.map((prop, key) => {
+  const createLinks = (EmployeeRoute) => {
+    return EmployeeRoute.map((prop, key) => {
       return (
         <NavItem key={key}>
           <NavLink
@@ -73,7 +67,7 @@ const NavBar = (props) => {
             onClick={closeCollapse}
             activeClassName="active"
           >
-            <i className={prop.icon} />
+            
             {prop.name}
           </NavLink>
         </NavItem>
@@ -84,7 +78,7 @@ const NavBar = (props) => {
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
         <Container fluid>
-          <Nav navbar>{createLinks(routes)}</Nav>
+          <Nav navbar>{createLinks(EmployeeRoute)}</Nav>
 
           <Link
             className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
@@ -146,7 +140,7 @@ const NavBar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem href="/login" onClick={(e) => e.preventDefault(), localStorage.clear()}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
@@ -159,13 +153,13 @@ const NavBar = (props) => {
   );
   
 };
-NavBar.defaultProps = {
- routes: [{}],
+NavBarEmployee.defaultProps = {
+  EmployeeRoute: [{}],
 };
 
-NavBar.propTypes = {
+NavBarEmployee.propTypes = {
   // links that will be displayed inside the component
-  routes: PropTypes.arrayOf(PropTypes.object),
+  EmployeeRoute: PropTypes.arrayOf(PropTypes.object),
   logo: PropTypes.shape({
     // innerLink is for links that will direct the user within the app
     // it will be rendered as <Link to="...">...</Link> tag
@@ -177,4 +171,4 @@ NavBar.propTypes = {
   }),
 };
 
-export default NavBar;
+export default NavBarEmployee;

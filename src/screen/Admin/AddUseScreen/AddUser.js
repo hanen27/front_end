@@ -1,6 +1,7 @@
-import React from 'react';
+import React , { Component } from 'react';
 import Header from '../../../utils/Header';
 import Footer from '../../../utils/Footer';
+import axios from 'axios';
 
 import {
     Button,
@@ -16,13 +17,48 @@ import {
     
   } from "reactstrap";
 import NavBar from '../../../utils/NavBar';
-  const AddUser = ()=> {
+  class AddUser extends Component {
 
-    const mainContent = React.useRef(null);
+    state ={
+      name: '',
+      email: '',
+      password: '',
+      avatar: '',
+      adresse: '',
+      solde_conges: ''
+    }
+    componentDidMount(){
+      this.AddUser();
+    }
+    AddUser = async ()=>{
 
+  
+      let config = {
+        method : 'POST', 
+        url: 'http://127.0.0.1:8000/users/' ,
+        data: {
+          email: this.state.email,
+          password: this.state.password,
+          name: this.state.name,
+          avatar: this.state.avatar,
+          adresse: this.state.adresse,
+          solde_conges: this.state.solde_conges
+        }
+    } 
+    try{      
+        const response =  await axios(config);
+      console.log(response.data)
+    
+    }  
+      catch(err) {
+        return err;
+     } 
+    }
+
+render () {
     return (
       <>
-         <div className="main-content" ref={mainContent}>
+         <div className="main-content" >
 
       <NavBar/>
       </div>
@@ -69,6 +105,7 @@ import NavBar from '../../../utils/NavBar';
                             id="input-username"
                             placeholder="Username"
                             type="text"
+                            onChange={(text)=>this.setState({name:text.target.value})}
                           />
                         </FormGroup>
                       </Col>
@@ -85,6 +122,7 @@ import NavBar from '../../../utils/NavBar';
                             id="input-email"
                             placeholder="jesse@example.com"
                             type="email"
+                            onChange={(text)=>this.setState({email:text.target.value})}
                           />
                         </FormGroup>
                       </Col>
@@ -96,14 +134,15 @@ import NavBar from '../../../utils/NavBar';
                             className="form-control-label"
                             htmlFor="input-first-name"
                           >
-                            First name
+                            password
                           </label>
                           <Input
                             className="form-control-alternative"
                             defaultValue="Lucky"
                             id="input-first-name"
                             placeholder="First name"
-                            type="text"
+                            type="password"
+                            onChange={(text)=>this.setState({password:text.target.value})}
                           />
                         </FormGroup>
                       </Col>
@@ -113,7 +152,7 @@ import NavBar from '../../../utils/NavBar';
                             className="form-control-label"
                             htmlFor="input-last-name"
                           >
-                            Last name
+                            adresse
                           </label>
                           <Input
                             className="form-control-alternative"
@@ -121,6 +160,7 @@ import NavBar from '../../../utils/NavBar';
                             id="input-last-name"
                             placeholder="Last name"
                             type="text"
+                            onChange={(text)=>this.setState({adresse:text.target.value})}
                           />
                         </FormGroup>
                       </Col>
@@ -129,7 +169,7 @@ import NavBar from '../../../utils/NavBar';
                   <hr className="my-4" />
                   {/* Address */}
                   <h6 className="heading-small text-muted mb-4">
-                    Contact information
+                    
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -139,7 +179,7 @@ import NavBar from '../../../utils/NavBar';
                             className="form-control-label"
                             htmlFor="input-address"
                           >
-                            Address
+                            photo
                           </label>
                           <Input
                             className="form-control-alternative"
@@ -147,6 +187,7 @@ import NavBar from '../../../utils/NavBar';
                             id="input-address"
                             placeholder="Home Address"
                             type="text"
+                            onChange={(text)=>this.setState({avatar:text.target.value})}
                           />
                         </FormGroup>
                       </Col>
@@ -154,72 +195,40 @@ import NavBar from '../../../utils/NavBar';
                     <Row>
                       <Col lg="4">
                         <FormGroup>
-                          <label
+                         
+                        <label
                             className="form-control-label"
-                            htmlFor="input-city"
+                            htmlFor="input-address"
                           >
-                            City
+                            Solde Conges
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="New York"
-                            id="input-city"
-                            placeholder="City"
+                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
+                            id="input-address"
+                            placeholder="Home Address"
                             type="text"
+                            onChange={(text)=>this.setState({solde_conges:text.target.value})}
                           />
                         </FormGroup>
                       </Col>
                       <Col lg="4">
                         <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country"
-                          >
-                            Country
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="United States"
-                            id="input-country"
-                            placeholder="Country"
-                            type="text"
-                          />
+                        
                         </FormGroup>
                       </Col>
                       <Col lg="4">
                         <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country"
-                          >
-                            Postal code
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-postal-code"
-                            placeholder="Postal code"
-                            type="number"
-                          />
+                         
+                        
                         </FormGroup>
                       </Col>
                     </Row>
                   </div>
                   <hr className="my-4" />
                   {/* Description */}
-                  <h6 className="heading-small text-muted mb-4">About me</h6>
-                  <div className="pl-lg-4">
-                    <FormGroup>
-                      <label>About Me</label>
-                      <Input
-                        className="form-control-alternative"
-                        placeholder="A few words about you ..."
-                        rows="4"
-                        defaultValue="A beautiful Dashboard for Bootstrap 4. It is Free and
-                        Open Source."
-                        type="textarea"
-                      />
-                    </FormGroup>
-                  </div>
+                  <Button onClick= {()=>this.AddUser()} > valider</Button>
+
                 </Form>
               </CardBody>
             </Card>
@@ -232,4 +241,5 @@ import NavBar from '../../../utils/NavBar';
         </>
     );
 }
+  }
 export default AddUser;

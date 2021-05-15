@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
+
 import './loginStyle.css';
 import Header from '../../utils/Header';
 import {
@@ -16,12 +18,76 @@ import {
     Col,
     Container
   } from "reactstrap";
+  
 import { Link } from 'react-router-dom';
-   const Login =()=> {
-    const mainContent = React.useRef(null);
 
+   class Login extends Component{
+
+state = {
+  email:'',
+  password:''
+}
+constructor() {
+  super();
+  this.login();
+ 
+};
+
+handleEmail(text){
+  this.setState({email:text.target.value});
+}
+
+handlePassword(text){
+  this.setState({password:text.target.value});
+}
+
+login = async ()=>{
+
+  let config = {
+    method : 'POST', 
+    url: 'http://127.0.0.1:8000/auth/login' ,
+    data: {
+      email: this.state.email,
+      password: this.state.password
+    }
+} 
+try{      
+    const response =  await axios(config);
+
+if (response.data.roles=="ROLE_USER"){
+  this.props?.history.push('/employee')
+   localStorage.setItem("id", response.data.id)
+   localStorage.setItem("email", response.data.email)
+  localStorage.setItem("password", response.data.password)
+   localStorage.setItem("adresse", response.data.adresse)
+   localStorage.setItem("avatar", response.data.avatar)
+   localStorage.setItem("name",response.data.name)
+   localStorage.setItem("solde conges",response.data.solde_conges)
+
+
+
+
+
+
+}
+else if (response.data.roles=="ROLE_ADMIN"){
+  this.props?.history.push('/admin')
+}
+else {
+  this.props?.history.push('/login')
+  alert("error");
+
+}
+}  
+  catch(err) {
+    return err;
+ } 
+// this.props?.history.push('/admin')
+
+}
+render(){
        return (
-        <div className="main-content" ref={mainContent}>
+        <div className="main-content" >
 
          <Header/>
         <Container className="mt--8 pb-5">
@@ -71,6 +137,7 @@ import { Link } from 'react-router-dom';
                     placeholder="Email"
                     type="email"
                     autoComplete="new-email"
+                    onChange={(text)=>{this.handleEmail(text)}}
                   />
                 </InputGroup>
               </FormGroup>
@@ -85,6 +152,7 @@ import { Link } from 'react-router-dom';
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
+                    onChange={(text)=>{this.handlePassword(text)}}
                   />
                 </InputGroup>
               </FormGroup>
@@ -92,7 +160,7 @@ import { Link } from 'react-router-dom';
                 <input
                   className="custom-control-input"
                   id=" customCheckLogin"
-                  type="checkbox"
+                  type="checkbox" 
                 />
                 <label
                   className="custom-control-label"
@@ -102,8 +170,8 @@ import { Link } from 'react-router-dom';
                 </label>
               </div>
               <div className="text-center">
-                <Link to="/admin/demandes">
-                <Button className="my-4" color="primary" type="button">
+                <Link >
+                <Button onClick= {this.login}className="my-4" color="primary" type="button">
                   Sign in
                 </Button>
                 </Link>
@@ -136,6 +204,6 @@ import { Link } from 'react-router-dom';
       </Container>
       </div>
       );
-      
+   }
    }
    export default Login;

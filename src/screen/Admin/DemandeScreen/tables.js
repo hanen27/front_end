@@ -46,7 +46,7 @@ return (
                   </tr>
                   </thead>
                  <>
-                  {DATA.map ((item)=> item.etat == "encours" &&  <Ligne DATAtoLigne={item}/>  
+                  {DATA.map ((item)=> item.etat === "encours" &&  <Ligne DATAtoLigne={item} accepter={props.actionAccpte} rejter={props.actionRejter}/>  
                  
                    
                 

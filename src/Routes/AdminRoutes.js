@@ -6,13 +6,13 @@ var routes = [
     {
         path: "/demandes",
         name: "Demandes",
-        component:  Demandes ,
+        component: Demandes ,
         Layout : "/admin"
     },
     {
         path: "/AddUser",
         name: "AddUser",
-        component:AddUser ,
+        component: AddUser ,
         Layout : "/admin"
 
         

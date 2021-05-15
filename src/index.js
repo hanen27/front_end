@@ -14,6 +14,7 @@ import Employee from "./screen/EmployeeScreen/Employee";
 import "./assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/scss/argon-dashboard-react.scss";
+import AddDemande from "./screen/EmployeeScreen/AddDemande.js";
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
@@ -21,17 +22,13 @@ ReactDOM.render(
   <Route path={element.path}  render={(props) => <element.component {...props} /> } />
 })} */}
 
-      <Route path="/admin" exact render={(props) => <Dashboard {...props} />} >
-        
-
-      </Route>
-      <Route path="/admin/AddUser" render={(props) => <AddUser {...props} />} />
-     
+      <Route path="/admin"  render={(props) => <Dashboard {...props} />} />
+      
    
       <Route path="/login" render={(props) => <Login {...props} />} />
-      <Route path="/employee" render={(props) => <Employee {...props} />} />
-     
-      <Redirect from="/" to="/admin" />
+      <Route path="/Employee" render={(props) => <Employee {...props} />} />
+
+      <Redirect from="/" to="/login" />
     </Switch>
   </BrowserRouter>,
   // <App />,

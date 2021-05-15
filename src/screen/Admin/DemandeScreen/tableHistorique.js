@@ -42,7 +42,7 @@ const TableHistorique =(props)=>{
                 </tr>
               </thead>
               <>
-                  {Data.map ((item1)=> item1.etat !="encours" &&  <LigneHistorique DataHistorique={item1}/>
+                  {Data.map((item1)=> item1.etat !="encours" &&  <LigneHistorique DataHistorique={item1}/>
                  
                    
                 

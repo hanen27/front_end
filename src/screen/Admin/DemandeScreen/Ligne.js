@@ -21,24 +21,14 @@ import {
     UncontrolledTooltip,
     Button,
   } from "reactstrap";
-  const apiUpdate = axios.create({
-   baseURL: 'http://127.0.0.1:8000/updatedemande'
-  })
+  
+  
 const Ligne =(props)=>{
     
     const item  = props.DATAtoLigne;
-    function handleClick(e) {
-        e.preventDefault();
-      }
-   const acceptDemande = (id) =>{
-        const resultat =  apiUpdate.put(`/${id}`, {"etat":"accepter"})
-        
-        
-        
-    }
-    const rejeterDemande = (id) =>{
-        const resultat =  apiUpdate.put(`/${id}`, {"etat":"rejeter"})
-    }
+
+  
+  
         return (
            
           <>
@@ -60,8 +50,9 @@ const Ligne =(props)=>{
                     className="float-right"
                     color="secondary"
                     
-                    onClick={rejeterDemande(item.id) }          
                              size="sm"
+                             onClick={()=>props.rejeter(item.id) }          
+
                   >
                     Rejeter
                   </Button>
@@ -69,7 +60,7 @@ const Ligne =(props)=>{
                     className="float-right"
                     color="success"
                    
-                    onClick={acceptDemande(item.id) }          
+                    onClick={()=>props.accepter(item.id) }          
 
                     size="sm"
                  >
